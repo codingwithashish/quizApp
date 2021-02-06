@@ -1,0 +1,145 @@
+<script>
+	window.onload =()=>{
+		showQues(0);
+	}
+</script>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quiz Application</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<style type="text/css">
+	*{margin: 0;padding: 0;box-sizing: border-box;font-family: sans-serif;}
+	.wrapper{width: 100%;height: 100vh;background-color: #341f97;display: flex;justify-content: center;align-items: center;}
+	.quiz{width: 800px;height: 500px;display: grid;grid-template-rows: 50px auto;border-radius: 3px;box-shadow: 0px 2px 5px 10px rgba(0,0,0,0.5)}
+	.quize_header{background: #fff;display: flex;justify-content: space-between;align-items: center;}
+	.quize_name{padding-left: 20px;}
+.quize_time{width: 70px;height: 50px;background: #341f97;display: flex;justify-content: center;align-items: center;color: #fff;}
+	.quize_body{background: #ecf0f1;padding: 30px;}
+	.option_grp{list-style: none;margin: 30px 0 0 0}
+	.opetion{width: 300px;background: #fff;margin-bottom: 15px;padding: 14px 20px;border-radius: 100px;border: 2px solid transparent;}
+	.opetion:hover{cursor: pointer;border: 2px solid #341f97;transition: all ease .4s;color:#341f97; }
+	.next_btn{width: 200px;padding: 14px 20px;border: none;outline: none;background: #341f97;color: #fff;cursor: pointer;border-radius: 100px;box-shadow: 2px 2px 10px 3px rgba(0,0,0,0.6)}
+	.next_btn:hover{background: #fff;transition: .4s ease all;color:#341f97; }
+	.active{background-color: #341f97;color: #fff !important;}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<div class="quiz">
+		<div class="quize_header">
+			<div class="quize_name">
+				<h4>hello, <span id="name"></span></h4>
+			</div>
+			<div class="quize_time"><span> 00:00 </span> </div>
+		</div>
+		<div class="quize_body">
+			<div id="questions">
+				<!-- <h2>Q1. What is CSS?</h2>
+				<ul class="option_grp">
+					<li class="opetion">opetion</li>
+					<li class="opetion">opetion</li>
+					<li class="opetion">opetion</li>
+					<li class="opetion">opetion</li>
+				</ul> -->
+			</div>
+
+			<button class="next_btn" onclick="nextQues()">Next Question</button>
+		</div>
+
+	</div>
+</div>
+<script>
+	const questions = [
+	{
+		id:1,
+		question : "What is full name of Css ? ",
+		answer : "cascading style sheet",
+		option : [
+				"cheet style sheet",
+				"cascading style sheet",
+				"cascading style size",
+				"casting style size",
+		]
+	},
+	{
+		id:2,
+		question : "What is PHP ? ",
+		answer : "create dynamic web pages",
+		option : [
+				"create dynamic web pages",
+				"Frontend language",
+				"use graphic design",
+				"client site scripting",
+		]
+	},
+	{
+		id:3,
+		question : "What is js ? ",
+		answer : "client site scripting",
+		option : [
+				"backend language",
+				"use graphic design",
+				"create dynamic web pages",
+				"client site scripting",
+		]
+	}
+
+]
+
+let name = sessionStorage.getItem('name');
+document.querySelector('#name').innerHTML = name;
+
+let ques_count = 0;
+let point = 0;
+const nextQues = () =>{
+	let answer = document.querySelector("li.opetion.active").innerHTML;
+	if(answer == questions[ques_count].answer){
+		point +=  10;
+		sessionStorage.setItem("points",point);
+	}
+	if(ques_count == questions.length-1){
+		location.href = "quizAppfinal.html";
+		return;
+	}
+	
+	ques_count++;
+	showQues(ques_count);
+}
+
+const showQues =(count)=>{
+	let question =  document.getElementById('questions');
+
+	question.innerHTML = `
+
+	<h2>Q${ques_count+1} ${questions[count].question} </h2>
+		<ul class="option_grp">
+			<li class="opetion">${questions[count].option[0]}</li>
+			<li class="opetion">${questions[count].option[1]}</li>
+			<li class="opetion">${questions[count].option[2]}</li>
+			<li class="opetion">${questions[count].option[3]}</li>
+		</ul>
+	`;
+	toggleOpetion();
+}
+
+function toggleOpetion(){
+	let option = document.querySelectorAll("li.opetion");
+
+	for(let i=0;i<option.length;i++){
+		option[i].onclick = function(){
+
+			for(let j=0;j<option.length;j++){
+				if(option[j].classList.contains("active")){
+					option[j].classList.remove("active");
+				}
+			}
+			option[i].classList.add("active");
+		}
+	}
+}
+</script>
+<script src="quizeTimer.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quiz Application</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<style type="text/css">
+	*{margin: 0;padding: 0;box-sizing: border-box;}
+	.wrapper{width: 100%;height: 100vh;background-color: #341f97;display: flex;justify-content: center;align-items: center;}
+	.welom_text{width: 700px;text-align: center;color: #fff;3}
+
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<div class="welom_text">
+		<h1>Well done , <span id="name"></span></h1>
+		<h2>Your collect points : <span id="points"></span></h2>
+	</div>
+</div>
+
+<script>
+
+let name = sessionStorage.getItem('name');
+let point = sessionStorage.getItem('points');
+
+
+document.querySelector('#name').innerHTML = name;
+document.querySelector('#points').innerHTML = point;
+
+</script>
+</body>
+</html>
